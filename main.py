@@ -37,6 +37,7 @@ lines = []
 # Главный цикл программы
 while True:
     for event in pygame.event.get():
+        screen.fill((0,0,0))   
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -47,13 +48,13 @@ while True:
                 print(active_point)
             screen.set_at(event.pos, (0, 0, 255))
             active_point = None
-            try:
-                # print(lines[0][1][0]-lines[0][0][0])
-                # print((lines[0][1][0]-lines[0][0][0])/(second_point_value-first_point_value))
-                kef = (lines[0][1][1]-lines[0][0][1])/(second_point_value-first_point_value)
-                print((event.pos[1]-lines[0][0][1])/(kef)+first_point_value)
-            except:
-                pass
+            # try:
+            #     # print(lines[0][1][0]-lines[0][0][0])
+            #     # print((lines[0][1][0]-lines[0][0][0])/(second_point_value-first_point_value))
+            #     kef = (lines[0][1][1]-lines[0][0][1])/(second_point_value-first_point_value)
+            #     print((event.pos[1]-lines[0][0][1])/(kef)+first_point_value)
+            # except:
+            #     pass
             # print(lines)
             for i in range(len(lines)):
                 for j in range(2):
@@ -61,7 +62,13 @@ while True:
                     if(dist(event.pos, lines[i][j])<10):
                         active_point = lines[i][j]
                         active_point_index = i
+
+            if(first_point != None):
+                draw_line(screen, first_point, event.pos)
             
+            if(selected_point != None):
+                # del lines[active_point_index]
+                draw_line(screen, lines[active_point_index][0], event.pos)
 
                 
 
@@ -77,17 +84,16 @@ while True:
             else:
                 if (first_point == None):
                     first_point = event.pos
-                    first_point_value = int(input())
+                    # first_point_value = int(input())
                 else:
                     second_point = event.pos
-                    second_point_value = int(input())
+                    # second_point_value = int(input())
                     draw_line(screen, first_point, second_point)
                     lines.append((first_point, second_point))
                     first_point = None
                     second_point = None
     
-    screen.fill((0,0,0))
-    screen.blit(img,(0,0))
+    # screen.blit(img,(0,0))
     for line in lines:
         draw_line(screen, line[0], line[1])
     pygame.display.update()
