@@ -75,12 +75,16 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if selected_point != None:
                 draw_line(screen, lines[active_point_index][0], event.pos)
-                lines.append((lines[active_point_index][0], event.pos))
+                lines.append((lines[active_point_index][0], event.pos, False))
                 del lines[active_point_index]
                 active_point = None
                 selected_point = None
             elif active_point != None:
                 selected_point = active_point
+                lines[active_point_index] = (lines[active_point_index][0], 
+                                             lines[active_point_index][1], 
+                                             True)
+                
             else:
                 if (first_point == None):
                     first_point = event.pos
@@ -89,11 +93,12 @@ while True:
                     second_point = event.pos
                     # second_point_value = int(input())
                     draw_line(screen, first_point, second_point)
-                    lines.append((first_point, second_point))
+                    lines.append((first_point, second_point, False))
                     first_point = None
                     second_point = None
     
     # screen.blit(img,(0,0))
     for line in lines:
-        draw_line(screen, line[0], line[1])
+        if(line[2] == False):
+            draw_line(screen, line[0], line[1])
     pygame.display.update()
