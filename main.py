@@ -48,13 +48,13 @@ while True:
                 print(active_point)
             screen.set_at(event.pos, (0, 0, 255))
             active_point = None
-            # try:
-            #     # print(lines[0][1][0]-lines[0][0][0])
-            #     # print((lines[0][1][0]-lines[0][0][0])/(second_point_value-first_point_value))
-            #     kef = (lines[0][1][1]-lines[0][0][1])/(second_point_value-first_point_value)
-            #     print((event.pos[1]-lines[0][0][1])/(kef)+first_point_value)
-            # except:
-            #     pass
+            try:
+                # print(lines[0][1][0]-lines[0][0][0])
+                # print((lines[0][1][0]-lines[0][0][0])/(second_point_value-first_point_value))
+                kef = (lines[0][1][1]-lines[0][0][1])/(second_point_value-first_point_value)
+                print((event.pos[1]-lines[0][0][1])/(kef)+first_point_value)
+            except:
+                pass
             # print(lines)
             for i in range(len(lines)):
                 for j in range(2):
@@ -88,16 +88,16 @@ while True:
             else:
                 if (first_point == None):
                     first_point = event.pos
-                    # first_point_value = int(input())
+                    first_point_value = int(input())
                 else:
                     second_point = event.pos
-                    # second_point_value = int(input())
+                    second_point_value = int(input())
                     draw_line(screen, first_point, second_point)
                     lines.append((first_point, second_point, False))
                     first_point = None
                     second_point = None
     
-    # screen.blit(img,(0,0))
+    screen.blit(img,(0,0))
     for line in lines:
         if(line[2] == False):
             draw_line(screen, line[0], line[1])
